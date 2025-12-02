@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.svg" type="image/svg">
+    <meta name="description" content="Portfolio of Umaer Islam - A Professional Graphic Designer specializing in Branding, Logo Design, and Visual Identity.">
+    <meta name="keywords" content="Graphic Design, Branding, Logo Design, Visiting Card, Printing, Portfolio, Bangladeshi Designer, Desi Designer, Top Graphics desginer, Umaer Islam">
+    <meta name="author" content="Umaer Islam">
+    <meta property="og:title" content="Umaer Islam | Graphic Designer">
+    <meta property="og:description" content="Design with meaning, edit with Impact. View my portfolio.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:type" content="website">
+    
+    <title>Umaer Islam | Graphic Designer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Lato', 'sans-serif'],
+                        'heading': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            950: '#050507',
+                            900: '#0A0A0C',
+                            800: '#141416',
+                            700: '#1F1F22',
+                        },
+                        accent: {
+                            DEFAULT: '#6366f1', // Indigo-500
+                            glow: '#818cf8',    // Indigo-400
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Core Utilities --- */
+        body {
+            background-color: #0A0A0C;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Prevent scrolling when modal/menu is open */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0A0A0C;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.1), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08), transparent 25%);
+            animation: bg-shift 20s ease-in-out infinite alternate;
+            will-change: background-position;
+        }
+
+        @keyframes bg-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-nav {
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Spotlight Effect CSS */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            z-index: 3;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff 20%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-accent-gradient {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0A0A0C; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="text-center">
+            <h1 class="text-4xl font-heading font-bold text-white tracking-widest animate-pulse">
+                UMAER<span class="text-indigo-500">.</span>
+            </h1>
+            <div class="h-0.5 w-16 bg-indigo-600 mx-auto mt-2 rounded-full"></div>
+        </div>
+    </div>
+
+    <!-- Background Layers -->
+    <div class="animated-bg"></div>
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-blue-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-heading font-bold tracking-wider hover:text-indigo-400 transition-colors z-50" aria-label="Home">
+                UMAER<span class="text-indigo-500">.</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex items-center space-x-8 list-none">
+                <li><a href="#home" class="nav-link text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors relative group">Home<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300 group-hover:w-full"></span></a></li>
+                <li><a href="#about" class="nav-link text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors relative group">About<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300 group-hover:w-full"></span></a></li>
+                <li><a href="#skills" class="nav-link text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors relative group">Skills<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300 group-hover:w-full"></span></a></li>
+                <li><a href="#portfolio" class="nav-link text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors relative group">Portfolio<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300 group-hover:w-full"></span></a></li>
+                <li><a href="#contact" class="px-5 py-2 rounded-full border border-indigo-500/50 text-indigo-400 text-sm hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)]">Contact</a></li>
+            </ul>
+
+            <!-- Mobile Hamburger -->
+            <button id="mobile-menu-btn" class="md:hidden z-50 text-2xl text-white focus:outline-none" aria-label="Toggle Menu">
+                <i class="fas fa-bars transition-transform duration-300" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#0A0A0C]/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-all duration-300">
+            <a href="#home" class="mobile-link text-2xl font-medium text-gray-300 hover:text-indigo-400">Home</a>
+            <a href="#about" class="mobile-link text-2xl font-medium text-gray-300 hover:text-indigo-400">About</a>
+            <a href="#skills" class="mobile-link text-2xl font-medium text-gray-300 hover:text-indigo-400">Skills</a>
+            <a href="#portfolio" class="mobile-link text-2xl font-medium text-gray-300 hover:text-indigo-400">Portfolio</a>
+            <a href="#contact" class="mobile-link text-2xl font-medium text-indigo-400">Contact Me</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <header id="home" class="min-h-screen flex items-center justify-center relative px-6 pt-20">
+            <div class="text-center z-10 max-w-4xl">
+                <p class="text-indigo-400 text-lg md:text-xl font-medium mb-4 reveal tracking-[0.2em] uppercase">Graphic Designer</p>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-heading font-bold mb-6 reveal leading-tight text-gradient select-none">
+                    UMAER<br>ISLAM
+                </h1>
+                <div class="h-1 w-24 bg-indigo-600 mx-auto mb-8 rounded-full reveal shadow-lg shadow-indigo-500/50"></div>
+                <p class="text-xl md:text-3xl font-light text-gray-300 reveal italic font-serif">
+                    "Design with meaning_ <span class="text-accent-gradient font-semibold not-italic font-sans">edit with Impact</span>"
+                </p>
+                
+                <div class="mt-12 reveal flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="#portfolio" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-indigo-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        View My Works
+                    </a>
+                </div>
+            </div>
+            
+            <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer" aria-label="Scroll Down">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </header>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 px-6 relative">
+            <div class="container mx-auto max-w-6xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                    <!-- Image -->
+                    <div class="relative reveal group perspective-1000">
+                        <div class="absolute inset-0 bg-indigo-600 rounded-lg transform translate-x-3 translate-y-3 transition-transform group-hover:translate-x-5 group-hover:translate-y-5 -z-10"></div>
+                        <div class="glass-card p-2 rounded-lg overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Umaer Islam Portrait" 
+                                 loading="lazy"
+                                 class="w-full h-auto rounded-md grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                        </div>
+                    </div>
+
+                    <!-- Text -->
+                    <div class="reveal">
+                        <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">About <span class="text-indigo-500">Me</span></h2>
+                        <div class="space-y-6 text-gray-400 text-lg leading-relaxed">
+                            <p>
+                                I am a passionate Graphic Designer who believes that design is not just about how things look, but how they work. With a keen eye for aesthetics and a strategic approach to visual communication, I craft brand identities that leave a lasting impression.
+                            </p>
+                            <p>
+                                My philosophy revolves around minimalism and impact. Whether it's a logo that defines a startup or a poster that tells a story, I ensure every pixel serves a purpose.
+                            </p>
+                        </div>
+                        
+                        <div class="mt-10 grid grid-cols-3 gap-6 border-t border-gray-800 pt-8">
+                            <div class="text-center">
+                                <span class="block text-3xl font-bold text-white mb-1">5+</span>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Years Exp</span>
+                            </div>
+                            <div class="text-center border-l border-gray-800">
+                                <span class="block text-3xl font-bold text-white mb-1">120+</span>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Projects</span>
+                            </div>
+                            <div class="text-center border-l border-gray-800">
+                                <span class="block text-3xl font-bold text-white mb-1">50+</span>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Clients</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 px-6 bg-dark-800/30">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl font-heading font-bold">My <span class="text-indigo-500">Expertise</span></h2>
+                    <div class="h-1 w-16 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6" id="skills-grid">
+                    <!-- Skills Injected via JS for Cleaner Markup -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-24 px-6 relative">
+            <div class="container mx-auto max-w-7xl">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal gap-6">
+                    <div>
+                        <h2 class="text-4xl font-heading font-bold mb-2">Selected <span class="text-indigo-500">Works</span></h2>
+                        <p class="text-gray-400">A curation of my finest design projects.</p>
+                    </div>
+                    
+                    <!-- Filters -->
+                    <div class="flex flex-wrap gap-2">
+                        <button class="filter-btn active px-5 py-2 rounded-full border border-gray-700 text-sm hover:bg-white hover:text-black hover:border-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-filter="all">All</button>
+                        <button class="filter-btn px-5 py-2 rounded-full border border-gray-700 text-sm hover:bg-white hover:text-black hover:border-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-filter="branding">Branding</button>
+                        <button class="filter-btn px-5 py-2 rounded-full border border-gray-700 text-sm hover:bg-white hover:text-black hover:border-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-filter="poster">Posters</button>
+                        <button class="filter-btn px-5 py-2 rounded-full border border-gray-700 text-sm hover:bg-white hover:text-black hover:border-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-filter="social">Social Media</button>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 reveal min-h-[500px]">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+         <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-gradient-to-t from-black to-transparent">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-4xl font-heading font-bold mb-8 reveal">Let's Create <span class="text-indigo-500">Impact</span></h2>
+            <p class="text-gray-400 mb-12 reveal">Ready to elevate your brand? Get in touch.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                <!-- Email -->
+                <a href="mailto:umaerislam23@gmail.com" class="group glass-card p-6 rounded-xl flex items-center justify-center space-x-4 hover:bg-indigo-900/20 transition-all cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-indigo-500 transition-colors">
+                        <i class="fas fa-envelope text-white"></i>
+                    </div>
+                    <span class="text-lg font-medium group-hover:text-white">umaerislam23@gmail.com</span>
+                </a>
+                
+                <!-- WhatsApp -->
+                <a href="https://wa.me/+8801870267949" class="group glass-card p-6 rounded-xl flex items-center justify-center space-x-4 hover:bg-green-900/20 transition-all cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-green-500 transition-colors">
+                        <i class="fab fa-whatsapp text-white"></i>
+                    </div>
+                    <span class="text-lg font-medium group-hover:text-white">Umaer Islam</span>
+                </a>
+
+                <!-- Phone -->
+                <a href="tel:+8801870267949" class="group glass-card p-6 rounded-xl flex items-center justify-center space-x-4 hover:bg-blue-900/20 transition-all cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+                        <i class="fas fa-phone text-white"></i>
+                    </div>
+                    <span class="text-lg font-medium group-hover:text-white">+880 1870-267949</span>
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/designer.umaer" class="group glass-card p-6 rounded-xl flex items-center justify-center space-x-4 hover:bg-blue-800/20 transition-all cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                        <i class="fab fa-facebook-f text-white"></i>
+                    </div>
+                    <span class="text-lg font-medium group-hover:text-white">Umaer Islam</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-gray-800 text-center text-gray-500 text-sm bg-dark-900">
+        <p>&copy; <span id="year"></span> Umaer Islam. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-indigo-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center translate-y-20 opacity-0 transition-all duration-300 hover:bg-indigo-700 z-40 focus:outline-none" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Portfolio Modal -->
+    <div id="project-modal" class="fixed inset-0 z-[60] hidden transition-all duration-300" aria-modal="true" role="dialog">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="modal-overlay"></div>
+        
+        <!-- Content -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl h-[85vh] bg-[#141416] border border-gray-700 rounded-2xl overflow-hidden shadow-2xl opacity-0 scale-95 transition-all duration-300 flex flex-col md:flex-row" id="modal-content">
+            
+            <button class="absolute top-4 right-4 z-20 w-10 h-10 bg-black/50 rounded-full text-white hover:bg-red-500/80 transition-colors flex items-center justify-center backdrop-blur-sm" onclick="closeModal()" aria-label="Close Modal">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Image Side -->
+            <div class="h-1/2 md:h-full md:w-3/5 bg-gray-800 relative overflow-hidden group">
+                <img id="modal-img" src="" alt="Project Preview" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#141416] via-transparent to-transparent md:bg-gradient-to-r"></div>
+            </div>
+
+            <!-- Content Side -->
+            <div class="h-1/2 md:h-full md:w-2/5 p-8 md:p-10 flex flex-col justify-center overflow-y-auto custom-scrollbar bg-[#141416]">
+                <span id="modal-category" class="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-3">Category</span>
+                <h3 id="modal-title" class="text-3xl md:text-4xl font-heading font-bold mb-6 text-white leading-tight">Project Title</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-2 text-gray-500">About Project</h4>
+                        <p id="modal-desc" class="text-gray-300 leading-relaxed font-light">Description goes here...</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-3 text-gray-500">Tools Used</h4>
+                        <div id="modal-tools" class="flex flex-wrap gap-2">
+                            <!-- Tools injected here -->
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-gray-800">
+                        <a href="#" class="inline-flex items-center gap-2 text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                            View Live Project <i class="fas fa-external-link-alt text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. Preloader ---
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }, 500);
+            });
+
+            // --- 2. Dynamic Year ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // --- 3. Skill Data & Rendering ---
+            const skills = [
+                { icon: 'fa-pen-nib', name: 'Logo Design', color: 'text-indigo-400', border: 'border-indigo-500/20' },
+                { icon: 'far fa-id-card', name: 'Brand Identity', color: 'text-purple-400', border: 'border-purple-500/20' },
+                { icon: 'fas fa-image', name: 'Posters', color: 'text-blue-400', border: 'border-blue-500/20' },
+                { icon: 'fas fa-hashtag', name: 'Social Media', color: 'text-pink-400', border: 'border-pink-500/20' },
+                { icon: 'fas fa-laptop-code', name: 'UI Elements', color: 'text-green-400', border: 'border-green-500/20' }
+            ];
+
+            const skillsGrid = document.getElementById('skills-grid');
+            skills.forEach((skill, index) => {
+                const div = document.createElement('div');
+                div.className = `spotlight-card glass-card p-8 rounded-2xl text-center hover:-translate-y-2 transition-transform duration-300 reveal border-t ${skill.border}`;
+                div.style.transitionDelay = `${index * 50}ms`;
+                div.innerHTML = `
+                    <div class="${skill.color} text-4xl mb-4"><i class="${skill.icon}"></i></div>
+                    <h3 class="font-bold text-lg text-gray-200">${skill.name}</h3>
+                `;
+                skillsGrid.appendChild(div);
+            });
+
+            // --- 4. Portfolio Data & Rendering ---
+            const projects = [
+                {
+                    id: 1,
+                    title: "Brew & Bean Co.",
+                    category: "branding",
+                    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    description: "Complete visual identity redesign for an artisanal coffee chain. The goal was to merge modern minimalism with rustic warmth to appeal to Gen-Z coffee lovers.",
+                    tools: ["Illustrator", "Photoshop"]
+                },
+                {
+                    id: 2,
+                    title: "Neon Nights",
+                    category: "poster",
+                    image: "https://images.unsplash.com/photo-1545987796-200677ee8e8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    description: "A series of high-energy promotional posters for an electronic music festival. Focused on vibrant gradients, typography manipulation, and visual noise.",
+                    tools: ["Photoshop", "Cinema 4D"]
+                },
+                {
+                    id: 3,
+                    title: "EcoLife App",
+                    category: "social",
+                    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    description: "Social media campaign and UI element design for an eco-friendly lifestyle app. Created a cohesive set of Instagram carousels and story assets.",
+                    tools: ["Figma", "Illustrator"]
+                },
+                {
+                    id: 4,
+                    title: "Apex Fitness",
+                    category: "branding",
+                    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    description: "Bold and aggressive logo design and merchandise branding for a high-performance gym. The logo utilizes negative space to create movement.",
+                    tools: ["Illustrator", "Indesign"]
+                }
+            ];
+
+            const grid = document.getElementById('portfolio-grid');
+            
+            function renderProjects(filter = 'all') {
+                grid.innerHTML = '';
+                const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+                
+                filtered.forEach((project, index) => {
+                    const card = document.createElement('div');
+                    card.className = `group relative overflow-hidden rounded-xl cursor-pointer fade-up h-80 shadow-2xl`;
+                    card.style.animationDelay = `${index * 100}ms`;
+                    
+                    card.innerHTML = `
+                        <img src="${project.image}" alt="${project.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-dark-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                            <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${project.category}</span>
+                            <h3 class="text-2xl font-bold text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">${project.title}</h3>
+                            <div class="mt-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100 flex items-center gap-2 text-sm font-medium text-gray-300">
+                                View Case Study <i class="fas fa-arrow-right text-indigo-500"></i>
+                            </div>
+                        </div>
+                    `;
+                    
+                    card.onclick = () => openModal(project);
+                    grid.appendChild(card);
+                });
+            }
+
+            // --- 5. Filtering Logic ---
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-indigo-600', 'text-white', 'border-transparent');
+                        b.classList.add('border-gray-700');
+                    });
+                    
+                    btn.classList.remove('border-gray-700');
+                    btn.classList.add('bg-indigo-600', 'text-white', 'border-transparent');
+                    
+                    renderProjects(btn.dataset.filter);
+                });
+            });
+
+            // Initial Render (Set active button style programmatically to match HTML)
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('bg-indigo-600', 'text-white', 'border-transparent');
+            document.querySelector('.filter-btn[data-filter="all"]').classList.remove('border-gray-700');
+            renderProjects();
+
+            // --- 6. Modal Logic ---
+            const modal = document.getElementById('project-modal');
+            const modalContent = document.getElementById('modal-content');
+            window.openModal = (project) => { // Expose to window for onclick
+                document.getElementById('modal-img').src = project.image;
+                document.getElementById('modal-title').innerText = project.title;
+                document.getElementById('modal-category').innerText = project.category;
+                document.getElementById('modal-desc').innerText = project.description;
+                
+                const toolsContainer = document.getElementById('modal-tools');
+                toolsContainer.innerHTML = '';
+                project.tools.forEach(tool => {
+                    const badge = document.createElement('span');
+                    badge.className = 'px-3 py-1 bg-gray-800 border border-gray-700 rounded text-xs text-gray-300';
+                    badge.innerText = tool;
+                    toolsContainer.appendChild(badge);
+                });
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('no-scroll');
+                
+                requestAnimationFrame(() => {
+                    modalContent.classList.remove('opacity-0', 'scale-95');
+                    modalContent.classList.add('opacity-100', 'scale-100');
+                });
+            }
+
+            window.closeModal = () => {
+                modalContent.classList.remove('opacity-100', 'scale-100');
+                modalContent.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('no-scroll');
+                }, 300);
+            }
+
+            document.getElementById('modal-overlay').addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+            // --- 7. UI Interactivity (Spotlight & Scroll) ---
+            
+            // Navbar Scroll
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('glass-nav', 'py-2');
+                    navbar.classList.remove('py-4');
+                    
+                    // Show Back to Top
+                    backToTop.classList.remove('translate-y-20', 'opacity-0');
+                } else {
+                    navbar.classList.remove('glass-nav', 'py-2');
+                    navbar.classList.add('py-4');
+                    
+                    // Hide Back to Top
+                    backToTop.classList.add('translate-y-20', 'opacity-0');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Spotlight Effect
+            const cards = document.querySelectorAll('.spotlight-card');
+            cards.forEach(card => {
+                card.onmousemove = e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+
+            // Mobile Menu
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            let isMenuOpen = false;
+            
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if(isMenuOpen) {
+                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                    mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times', 'rotate-90');
+                    document.body.classList.add('no-scroll');
+                } else {
+                    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    menuIcon.classList.remove('fa-times', 'rotate-90');
+                    menuIcon.classList.add('fa-bars');
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+            
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    menuIcon.classList.remove('fa-times', 'rotate-90');
+                    menuIcon.classList.add('fa-bars');
+                    document.body.classList.remove('no-scroll');
+                });
+            });
+
+            // Scroll Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
